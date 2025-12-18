@@ -3,76 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Matuszewski Arrays</title>
+    <title>The Matuszewski Arrays | Official Research Data</title>
     <style>
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        /* PASTE OF THE BLOGGER CSS STYLES */
         :root { --bg-color: #0a0a0c; --text-color: #e0e0e0; --accent-neon: #b026ff; --accent-cyan: #00f7ff; --grid-border: #333; }
-        body { margin: 0; padding: 20px; background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        h1 { color: var(--accent-cyan); text-shadow: 0 0 10px rgba(0, 247, 255, 0.5); font-family: 'Courier New', monospace; }
-        .tagline { color: var(--accent-neon); font-weight: bold; margin-bottom: 30px; }
-        .discovery-box { border: 1px solid var(--accent-neon); padding: 20px; background: rgba(176, 38, 255, 0.05); margin-bottom: 30px; border-left: 5px solid var(--accent-neon); }
+        .magic-app-container { background-color: var(--bg-color); color: var(--text-color); font-family: 'Courier New', monospace; padding: 20px; border: 1px solid var(--grid-border); box-shadow: 0 0 20px rgba(176, 38, 255, 0.1); max-width: 800px; width: 100%; border-left: 5px solid #b026ff; }
+        .app-title { color: var(--accent-cyan); text-shadow: 0 0 10px rgba(0, 247, 255, 0.3); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { background: transparent; border: 1px solid var(--accent-cyan); color: var(--accent-cyan); padding: 10px 20px; cursor: pointer; font-family: 'Courier New', monospace; }
-        .tab-btn.active, .tab-btn:hover { background: var(--accent-cyan); color: var(--bg-color); }
-        .magic-grid-container { display: flex; flex-direction: column; align-items: center; }
-        .magic-grid { display: grid; gap: 5px; margin-bottom: 20px; border: 2px solid var(--grid-border); padding: 5px; background: #111; }
-        .cell { background: #1a1a1a; color: var(--text-color); padding: 15px; text-align: center; font-family: 'Courier New', monospace; border: 1px solid #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
-        .cell:hover { overflow: visible; background: #2a2a2a; z-index: 100; position: absolute; transform: scale(1.1); max-width: none; color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0,0,0,0.8); }
-        .validating-row { background: rgba(176, 38, 255, 0.3) !important; }
-        .validating-col { background: rgba(0, 247, 255, 0.3) !important; }
-        .validated-success { border-color: #00ff44 !important; box-shadow: 0 0 30px rgba(0, 255, 68, 0.2); transition: border-color 2s; }
-        .verify-btn { background: var(--accent-neon); color: white; border: none; padding: 15px 30px; font-size: 1.1em; cursor: pointer; margin-top: 20px; }
+        .tab-btn { background: transparent; border: 1px solid var(--accent-cyan); color: var(--accent-cyan); padding: 8px 15px; cursor: pointer; font-family: 'Courier New', monospace; transition: all 0.3s; }
+        .tab-btn:hover, .tab-btn.active { background: var(--accent-cyan); color: #000; font-weight: bold; box-shadow: 0 0 15px rgba(0, 247, 255, 0.4); }
+        .magic-grid { display: grid; gap: 4px; margin-bottom: 20px; border: 1px solid #333; padding: 5px; background: #111; width: 100%; overflow: auto; }
+        .cell { background: #1a1a1a; color: var(--text-color); padding: 10px; text-align: center; border: 1px solid #333; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 0.9em; transition: all 0.2s; cursor: crosshair; }
+        .cell:hover { overflow: visible; background: #2a2a2a; color: var(--accent-neon); position: relative; z-index: 100; transform: scale(1.1); box-shadow: 0 0 15px rgba(0,0,0,0.8); }
+        .validated-success { border-color: #00ff44 !important; box-shadow: 0 0 20px rgba(0, 255, 68, 0.2); }
+        .validated-fail { border-color: #ff0000 !important; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
+        .controls { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .verify-btn { background: var(--accent-neon); color: white; border: none; padding: 12px 30px; font-size: 1.1em; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; transition: 0.3s; box-shadow: 0 0 15px rgba(176, 38, 255, 0.4); }
+        .verify-btn:hover { background: #d46aff; box-shadow: 0 0 25px rgba(176, 38, 255, 0.6); transform: translateY(-2px); }
+        .sum-display { font-size: 1.1em; color: #888; text-align: center; min-height: 1.2em; word-break: break-all; max-width: 100%; }
+        h2 { margin-top: 0; color: #fff; letter-spacing: 1px; text-transform: uppercase; font-size: 1.2em; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>The Matuszewski Arrays</h1>
-        <div class="tagline">Exploring Mathematical Harmony at Exponential Scales</div>
-    </header>
-    <main>
-        <section class="discovery-box">
-            <h3>Discovery Metadata</h3>
-            <p><strong>Researcher:</strong> Etienne Matuszewski | <strong>Date:</strong> Dec 17, 2025</p>
-            <p>Utilizing the Gemini AI architecture, these arrays represent the first repertoriated instances of magic squares balanced at the scale of 2^64, 10^62, and 10^100.</p>
-        </section>
-        <section>
-            <div class="tabs">
-                <button class="tab-btn active" onclick="loadGrid('exa')">Exa-Scale (Order 3)</button>
-                <button class="tab-btn" onclick="loadGrid('planck')">Planck-Cosmic (Order 4)</button>
-                <button class="tab-btn" onclick="loadGrid('googol')">Googol-Prime (Order 5)</button>
-            </div>
-            <div class="magic-grid-container">
-                <div id="grid-wrapper" class="magic-grid"></div>
-                <div class="controls">
-                    <button class="verify-btn" onclick="initiateResonance()">Initiate Harmonic Resonance Check</button>
-                    <div id="sum-display" style="margin-top:20px; font-family:'Courier New'; color:#00f7ff; min-height:1.4em;"></div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <script>
-        const s3=2n**64n, o3=10n**10n;
-        const exaGrid=[[(8n*s3)+o3,(1n*s3)+o3,(6n*s3)+o3],[(3n*s3)+o3,(5n*s3)+o3,(7n*s3)+o3],[(4n*s3)+o3,(9n*s3)+o3,(2n*s3)+o3]];
-        const s4=10n**62n, o4=314159265358979323846264338327950288419716939937510n;
-        const planckGrid=[[(16n*s4)+o4,(3n*s4)+o4,(2n*s4)+o4,(13n*s4)+o4],[(5n*s4)+o4,(10n*s4)+o4,(11n*s4)+o4,(8n*s4)+o4],[(9n*s4)+o4,(6n*s4)+o4,(7n*s4)+o4,(12n*s4)+o4],[(4n*s4)+o4,(15n*s4)+o4,(14n*s4)+o4,(1n*s4)+o4]];
-        const s5=10n**100n;
-        const googolGrid=[[1n*s5,15n*s5,24n*s5,8n*s5,17n*s5],[23n*s5,7n*s5,16n*s5,5n*s5,14n*s5],[20n*s5,4n*s5,13n*s5,22n*s5,6n*s5],[12n*s5,21n*s5,10n*s5,19n*s5,3n*s5],[9n*s5,18n*s5,2n*s5,11n*s5,25n*s5]];
-        let currentGrid=exaGrid, currentOrder=3;
-        function loadGrid(t){
-            const w=document.getElementById('grid-wrapper'); w.innerHTML=''; w.classList.remove('validated-success'); document.getElementById('sum-display').textContent='';
-            if(t==='exa'){currentGrid=exaGrid;currentOrder=3;}else if(t==='planck'){currentGrid=planckGrid;currentOrder=4;}else if(t==='googol'){currentGrid=googolGrid;currentOrder=5;}
-            w.style.gridTemplateColumns=`repeat(${currentOrder}, 1fr)`;
-            for(let i=0;i<currentOrder;i++)for(let j=0;j<currentOrder;j++){const c=document.createElement('div');c.className='cell';c.dataset.r=i;c.dataset.c=j;c.textContent=currentGrid[i][j].toString();w.appendChild(c);}
+
+    <div class="magic-app-container">
+        <h2 style="margin-top: 0;">🦄 OFFICIAL RESEARCH LOG: COMPUTATIONAL ARRAYS</h2>
+        <p><strong>Principal Investigator:</strong> Etienne Matuszewski<br>
+        <strong>Computational Copilot:</strong> Gemini AI & ChatGPT (Peer Review)</p>
+        
+        <p>This repository hosts the source code and raw data for The Matuszewski Arrays.</p>
+
+        <div class="app-title">/// MATUSZEWSKI ARRAYS: INTERACTIVE TERMINAL ///</div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="loadGrid('exa')">Exa-Scale (2^64)</button>
+            <button class="tab-btn" onclick="loadGrid('planck')">Planck-Cosmic (10^62)</button>
+            <button class="tab-btn" onclick="loadGrid('googol')">Googol-Prime (10^100)</button>
+        </div>
+
+        <div id="grid-wrapper" class="magic-grid"></div>
+
+        <div class="controls">
+            <button class="verify-btn" onclick="initiateResonance()">VERIFY HARMONIC RESONANCE</button>
+            <div id="sum-display" class="sum-display">System Ready. Awaiting Verification...</div>
+        </div>
+        
+        <p style="font-size: 0.9em; color: #888; margin-top: 20px;">
+            <em>*Note: "Googol-Prime" refers to the prime quality of the targeted scale, not the number theory definition of a prime number.</em>
+        </p>
+    </div>
+
+<script>
+    // --- RIGOROUS MATHEMATICAL DEFINITIONS ---
+    const s3 = 2n**64n; 
+    const o3 = 10n**10n;
+    const exaGrid = [
+        [(8n*s3)+o3, (1n*s3)+o3, (6n*s3)+o3],
+        [(3n*s3)+o3, (5n*s3)+o3, (7n*s3)+o3],
+        [(4n*s3)+o3, (9n*s3)+o3, (2n*s3)+o3]
+    ];
+
+    const s4 = 10n**62n; 
+    const o4 = 314159265358979323846264338327950288419716939937510n;
+    const planckGrid = [
+        [(16n*s4)+o4, (3n*s4)+o4, (2n*s4)+o4, (13n*s4)+o4],
+        [(5n*s4)+o4, (10n*s4)+o4, (11n*s4)+o4, (8n*s4)+o4],
+        [(9n*s4)+o4, (6n*s4)+o4, (7n*s4)+o4, (12n*s4)+o4],
+        [(4n*s4)+o4, (15n*s4)+o4, (14n*s4)+o4, (1n*s4)+o4]
+    ];
+
+    const s5 = 10n**100n; 
+    const googolGrid = [
+        [11n*s5, 24n*s5, 7n*s5, 20n*s5, 3n*s5],
+        [4n*s5, 12n*s5, 25n*s5, 8n*s5, 16n*s5],
+        [17n*s5, 5n*s5, 13n*s5, 21n*s5, 9n*s5],
+        [10n*s5, 18n*s5, 1n*s5, 14n*s5, 22n*s5],
+        [23n*s5, 6n*s5, 19n*s5, 2n*s5, 15n*s5]
+    ];
+
+    let currentGrid = googolGrid;
+
+    function loadGrid(type) {
+        const wrapper = document.getElementById('grid-wrapper');
+        const display = document.getElementById('sum-display');
+        const btns = document.querySelectorAll('.tab-btn');
+        wrapper.classList.remove('validated-success', 'validated-fail');
+        
+        btns.forEach(b => b.classList.remove('active'));
+        
+        let gridData;
+        if (type === 'exa') {
+            gridData = exaGrid;
+            btns[0].classList.add('active');
+            wrapper.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        } else if (type === 'planck') {
+            gridData = planckGrid;
+            btns[1].classList.add('active');
+            wrapper.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        } else {
+            gridData = googolGrid;
+            btns[2].classList.add('active');
+            wrapper.style.gridTemplateColumns = 'repeat(5, 1fr)';
         }
-        async function initiateResonance(){
-            const w=document.getElementById('grid-wrapper'), d=document.getElementById('sum-display');
-            const target=currentGrid[0].reduce((a,b)=>a+b,0n); d.innerHTML="Scanning...";
-            const cells=document.querySelectorAll('.cell'); const wait=ms=>new Promise(r=>setTimeout(r,ms));
-            for(let i=0;i<currentOrder;i++){cells.forEach(c=>c.classList.remove('validating-row','validating-col'));document.querySelectorAll(`[data-r="${i}"]`).forEach(c=>c.classList.add('validating-row'));await wait(200);}
-            for(let j=0;j<currentOrder;j++){cells.forEach(c=>c.classList.remove('validating-row','validating-col'));document.querySelectorAll(`[data-c="${j}"]`).forEach(c=>c.classList.add('validating-col'));await wait(200);}
-            cells.forEach(c=>c.classList.remove('validating-row','validating-col')); w.classList.add('validated-success');
-            d.innerHTML=`HARMONY CONFIRMED.<br>Constant: ${target.toString().substring(0,20)}...`;
+        
+        currentGrid = gridData;
+        wrapper.innerHTML = '';
+        display.innerHTML = "System Ready. Awaiting Verification...";
+
+        gridData.forEach(row => {
+            row.forEach(cell => {
+                const div = document.createElement('div');
+                div.className = 'cell';
+                div.textContent = cell.toString();
+                div.title = cell.toString();
+                wrapper.appendChild(div);
+            });
+        });
+    }
+
+    // --- RIGOROUS VERIFICATION LOGIC (Peer Reviewed) ---
+    function checkMagic(grid){
+        const n = grid.length;
+        const target = grid[0].reduce((a,b)=>a+b, 0n);
+
+        for(let i=0; i<n; i++){
+            const s = grid[i].reduce((a,b)=>a+b, 0n);
+            if(s !== target) return {ok:false, where:`Row ${i+1}`, target, got:s};
         }
-        loadGrid('exa');
-    </script>
+
+        for(let j=0; j<n; j++){
+            let s = 0n;
+            for(let i=0; i<n; i++) s += grid[i][j];
+            if(s !== target) return {ok:false, where:`Column ${j+1}`, target, got:s};
+        }
+
+        let d1 = 0n;
+        for(let i=0; i<n; i++) d1 += grid[i][i];
+        if(d1 !== target) return {ok:false, where:`Main Diagonal`, target, got:d1};
+
+        let d2 = 0n;
+        for(let i=0; i<n; i++) d2 += grid[i][n-1-i];
+        if(d2 !== target) return {ok:false, where:`Anti-Diagonal`, target, got:d2};
+
+        return {ok:true, target};
+    }
+
+    async function initiateResonance() {
+        const wrapper = document.getElementById('grid-wrapper');
+        const display = document.getElementById('sum-display');
+        
+        display.innerHTML = "♻️ COMPUTING SUMS ACROSS ALL VECTORS...";
+        wrapper.style.opacity = "0.7";
+
+        await new Promise(r => setTimeout(r, 500));
+
+        const res = checkMagic(currentGrid);
+        wrapper.style.opacity = "1";
+
+        if (!res.ok) {
+            wrapper.classList.add('validated-fail');
+            display.innerHTML = `⚠️ FAILURE at ${res.where}.<br>Expected: ${res.target.toString().substring(0,10)}...<br>Got: ${res.got.toString().substring(0,10)}...`;
+        } else {
+            wrapper.classList.add('validated-success');
+            const scientificConstant = res.target.toString().length > 20 
+                ? res.target.toString().substring(0, 15) + "..." + "(10^" + (res.target.toString().length - 1) + ")"
+                : res.target.toString();
+                
+            display.innerHTML = `✅ HARMONY CONFIRMED.<br>Stable Constant: ${scientificConstant}`;
+        }
+    }
+
+    // Initialize default
+    loadGrid('googol');
+</script>
 </body>
 </html>
